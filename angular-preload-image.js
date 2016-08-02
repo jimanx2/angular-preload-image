@@ -24,12 +24,15 @@
                 attrs.$observe('ngSrc', function () {
                     var url = attrs.ngSrc;
                     attrs.$set('src', scope.default);
+                    element.addClass('image-loading');
                     preLoader(url, function () {
                         attrs.$set('src', url);
+                        element.removeClass('image-loading');
                     }, function () {
                         if (attrs.fallbackImage != undefined) {
                             attrs.$set('src', attrs.fallbackImage);
                         }
+                        element.removeClass('image-loading');
                     });
                 })
     
@@ -48,6 +51,7 @@
                         element.css({
                             'background-image': 'url("' + scope.default + '")'
                         });
+                        element.addClass('image-loading');
                         preLoader(attrs.preloadBgImage, function () {
                             element.css({
                                 'background-image': 'url("' + attrs.preloadBgImage + '")'
@@ -58,6 +62,7 @@
                                     'background-image': 'url("' + attrs.fallbackImage + '")'
                                 });
                             }
+                            element.removeClass('image-loading');
                         });
                     });
                 }
